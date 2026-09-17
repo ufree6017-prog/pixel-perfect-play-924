@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
@@ -21,10 +22,22 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TrackRouteImport } from './routes/track'
 import { Route as VehiclesRouteImport } from './routes/vehicles'
+import { Route as AuthenticatedDriverRouteRouteImport } from './routes/_authenticated/driver/route'
+import { Route as AuthenticatedDriverIndexRouteImport } from './routes/_authenticated/driver/index'
+import { Route as AuthenticatedDriverDocumentsRouteImport } from './routes/_authenticated/driver/documents'
+import { Route as AuthenticatedDriverPodRouteImport } from './routes/_authenticated/driver/pod'
+import { Route as AuthenticatedDriverRequestsRouteImport } from './routes/_authenticated/driver/requests'
+import { Route as AuthenticatedDriverReturnTripsRouteImport } from './routes/_authenticated/driver/return-trips'
+import { Route as AuthenticatedDriverTripsRouteImport } from './routes/_authenticated/driver/trips'
+import { Route as AuthenticatedDriverWalletRouteImport } from './routes/_authenticated/driver/wallet'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -82,6 +95,53 @@ const VehiclesRoute = VehiclesRouteImport.update({
   path: '/vehicles',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDriverRouteRoute =
+  AuthenticatedDriverRouteRouteImport.update({
+    id: '/driver',
+    path: '/driver',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDriverIndexRoute =
+  AuthenticatedDriverIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDriverRouteRoute,
+  } as any)
+const AuthenticatedDriverDocumentsRoute =
+  AuthenticatedDriverDocumentsRouteImport.update({
+    id: '/documents',
+    path: '/documents',
+    getParentRoute: () => AuthenticatedDriverRouteRoute,
+  } as any)
+const AuthenticatedDriverPodRoute = AuthenticatedDriverPodRouteImport.update({
+  id: '/pod',
+  path: '/pod',
+  getParentRoute: () => AuthenticatedDriverRouteRoute,
+} as any)
+const AuthenticatedDriverRequestsRoute =
+  AuthenticatedDriverRequestsRouteImport.update({
+    id: '/requests',
+    path: '/requests',
+    getParentRoute: () => AuthenticatedDriverRouteRoute,
+  } as any)
+const AuthenticatedDriverReturnTripsRoute =
+  AuthenticatedDriverReturnTripsRouteImport.update({
+    id: '/return-trips',
+    path: '/return-trips',
+    getParentRoute: () => AuthenticatedDriverRouteRoute,
+  } as any)
+const AuthenticatedDriverTripsRoute =
+  AuthenticatedDriverTripsRouteImport.update({
+    id: '/trips',
+    path: '/trips',
+    getParentRoute: () => AuthenticatedDriverRouteRoute,
+  } as any)
+const AuthenticatedDriverWalletRoute =
+  AuthenticatedDriverWalletRouteImport.update({
+    id: '/wallet',
+    path: '/wallet',
+    getParentRoute: () => AuthenticatedDriverRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -96,6 +156,14 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
   '/vehicles': typeof VehiclesRoute
+  '/driver': typeof AuthenticatedDriverRouteRouteWithChildren
+  '/driver/documents': typeof AuthenticatedDriverDocumentsRoute
+  '/driver/pod': typeof AuthenticatedDriverPodRoute
+  '/driver/requests': typeof AuthenticatedDriverRequestsRoute
+  '/driver/return-trips': typeof AuthenticatedDriverReturnTripsRoute
+  '/driver/trips': typeof AuthenticatedDriverTripsRoute
+  '/driver/wallet': typeof AuthenticatedDriverWalletRoute
+  '/driver/': typeof AuthenticatedDriverIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,10 +178,18 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
   '/vehicles': typeof VehiclesRoute
+  '/driver/documents': typeof AuthenticatedDriverDocumentsRoute
+  '/driver/pod': typeof AuthenticatedDriverPodRoute
+  '/driver/requests': typeof AuthenticatedDriverRequestsRoute
+  '/driver/return-trips': typeof AuthenticatedDriverReturnTripsRoute
+  '/driver/trips': typeof AuthenticatedDriverTripsRoute
+  '/driver/wallet': typeof AuthenticatedDriverWalletRoute
+  '/driver': typeof AuthenticatedDriverIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
@@ -125,6 +201,14 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
   '/vehicles': typeof VehiclesRoute
+  '/_authenticated/driver': typeof AuthenticatedDriverRouteRouteWithChildren
+  '/_authenticated/driver/documents': typeof AuthenticatedDriverDocumentsRoute
+  '/_authenticated/driver/pod': typeof AuthenticatedDriverPodRoute
+  '/_authenticated/driver/requests': typeof AuthenticatedDriverRequestsRoute
+  '/_authenticated/driver/return-trips': typeof AuthenticatedDriverReturnTripsRoute
+  '/_authenticated/driver/trips': typeof AuthenticatedDriverTripsRoute
+  '/_authenticated/driver/wallet': typeof AuthenticatedDriverWalletRoute
+  '/_authenticated/driver/': typeof AuthenticatedDriverIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +225,14 @@ export interface FileRouteTypes {
     | '/terms'
     | '/track'
     | '/vehicles'
+    | '/driver'
+    | '/driver/documents'
+    | '/driver/pod'
+    | '/driver/requests'
+    | '/driver/return-trips'
+    | '/driver/trips'
+    | '/driver/wallet'
+    | '/driver/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,9 +247,17 @@ export interface FileRouteTypes {
     | '/terms'
     | '/track'
     | '/vehicles'
+    | '/driver/documents'
+    | '/driver/pod'
+    | '/driver/requests'
+    | '/driver/return-trips'
+    | '/driver/trips'
+    | '/driver/wallet'
+    | '/driver'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/auth'
     | '/book'
@@ -169,10 +269,19 @@ export interface FileRouteTypes {
     | '/terms'
     | '/track'
     | '/vehicles'
+    | '/_authenticated/driver'
+    | '/_authenticated/driver/documents'
+    | '/_authenticated/driver/pod'
+    | '/_authenticated/driver/requests'
+    | '/_authenticated/driver/return-trips'
+    | '/_authenticated/driver/trips'
+    | '/_authenticated/driver/wallet'
+    | '/_authenticated/driver/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
@@ -193,6 +302,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -272,11 +388,105 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VehiclesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/driver': {
+      id: '/_authenticated/driver'
+      path: '/driver'
+      fullPath: '/driver'
+      preLoaderRoute: typeof AuthenticatedDriverRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/driver/': {
+      id: '/_authenticated/driver/'
+      path: '/'
+      fullPath: '/driver/'
+      preLoaderRoute: typeof AuthenticatedDriverIndexRouteImport
+      parentRoute: typeof AuthenticatedDriverRouteRoute
+    }
+    '/_authenticated/driver/documents': {
+      id: '/_authenticated/driver/documents'
+      path: '/documents'
+      fullPath: '/driver/documents'
+      preLoaderRoute: typeof AuthenticatedDriverDocumentsRouteImport
+      parentRoute: typeof AuthenticatedDriverRouteRoute
+    }
+    '/_authenticated/driver/pod': {
+      id: '/_authenticated/driver/pod'
+      path: '/pod'
+      fullPath: '/driver/pod'
+      preLoaderRoute: typeof AuthenticatedDriverPodRouteImport
+      parentRoute: typeof AuthenticatedDriverRouteRoute
+    }
+    '/_authenticated/driver/requests': {
+      id: '/_authenticated/driver/requests'
+      path: '/requests'
+      fullPath: '/driver/requests'
+      preLoaderRoute: typeof AuthenticatedDriverRequestsRouteImport
+      parentRoute: typeof AuthenticatedDriverRouteRoute
+    }
+    '/_authenticated/driver/return-trips': {
+      id: '/_authenticated/driver/return-trips'
+      path: '/return-trips'
+      fullPath: '/driver/return-trips'
+      preLoaderRoute: typeof AuthenticatedDriverReturnTripsRouteImport
+      parentRoute: typeof AuthenticatedDriverRouteRoute
+    }
+    '/_authenticated/driver/trips': {
+      id: '/_authenticated/driver/trips'
+      path: '/trips'
+      fullPath: '/driver/trips'
+      preLoaderRoute: typeof AuthenticatedDriverTripsRouteImport
+      parentRoute: typeof AuthenticatedDriverRouteRoute
+    }
+    '/_authenticated/driver/wallet': {
+      id: '/_authenticated/driver/wallet'
+      path: '/wallet'
+      fullPath: '/driver/wallet'
+      preLoaderRoute: typeof AuthenticatedDriverWalletRouteImport
+      parentRoute: typeof AuthenticatedDriverRouteRoute
+    }
   }
 }
 
+interface AuthenticatedDriverRouteRouteChildren {
+  AuthenticatedDriverDocumentsRoute: typeof AuthenticatedDriverDocumentsRoute
+  AuthenticatedDriverPodRoute: typeof AuthenticatedDriverPodRoute
+  AuthenticatedDriverRequestsRoute: typeof AuthenticatedDriverRequestsRoute
+  AuthenticatedDriverReturnTripsRoute: typeof AuthenticatedDriverReturnTripsRoute
+  AuthenticatedDriverTripsRoute: typeof AuthenticatedDriverTripsRoute
+  AuthenticatedDriverWalletRoute: typeof AuthenticatedDriverWalletRoute
+  AuthenticatedDriverIndexRoute: typeof AuthenticatedDriverIndexRoute
+}
+
+const AuthenticatedDriverRouteRouteChildren: AuthenticatedDriverRouteRouteChildren =
+  {
+    AuthenticatedDriverDocumentsRoute: AuthenticatedDriverDocumentsRoute,
+    AuthenticatedDriverPodRoute: AuthenticatedDriverPodRoute,
+    AuthenticatedDriverRequestsRoute: AuthenticatedDriverRequestsRoute,
+    AuthenticatedDriverReturnTripsRoute: AuthenticatedDriverReturnTripsRoute,
+    AuthenticatedDriverTripsRoute: AuthenticatedDriverTripsRoute,
+    AuthenticatedDriverWalletRoute: AuthenticatedDriverWalletRoute,
+    AuthenticatedDriverIndexRoute: AuthenticatedDriverIndexRoute,
+  }
+
+const AuthenticatedDriverRouteRouteWithChildren =
+  AuthenticatedDriverRouteRoute._addFileChildren(
+    AuthenticatedDriverRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDriverRouteRoute: typeof AuthenticatedDriverRouteRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDriverRouteRoute: AuthenticatedDriverRouteRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   BookRoute: BookRoute,
