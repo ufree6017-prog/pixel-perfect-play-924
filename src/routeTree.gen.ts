@@ -22,7 +22,16 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TrackRouteImport } from './routes/track'
 import { Route as VehiclesRouteImport } from './routes/vehicles'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedDriverRouteRouteImport } from './routes/_authenticated/driver/route'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminDocumentsRouteImport } from './routes/_authenticated/admin/documents'
+import { Route as AuthenticatedAdminDriversRouteImport } from './routes/_authenticated/admin/drivers'
+import { Route as AuthenticatedAdminEnquiriesRouteImport } from './routes/_authenticated/admin/enquiries'
+import { Route as AuthenticatedAdminInvoicesRouteImport } from './routes/_authenticated/admin/invoices'
+import { Route as AuthenticatedAdminReturnTripsRouteImport } from './routes/_authenticated/admin/return-trips'
+import { Route as AuthenticatedAdminRidesRouteImport } from './routes/_authenticated/admin/rides'
+import { Route as AuthenticatedAdminWalletsRouteImport } from './routes/_authenticated/admin/wallets'
 import { Route as AuthenticatedDriverIndexRouteImport } from './routes/_authenticated/driver/index'
 import { Route as AuthenticatedDriverDocumentsRouteImport } from './routes/_authenticated/driver/documents'
 import { Route as AuthenticatedDriverPodRouteImport } from './routes/_authenticated/driver/pod'
@@ -95,11 +104,62 @@ const VehiclesRoute = VehiclesRouteImport.update({
   path: '/vehicles',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDriverRouteRoute =
   AuthenticatedDriverRouteRouteImport.update({
     id: '/driver',
     path: '/driver',
     getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminDocumentsRoute =
+  AuthenticatedAdminDocumentsRouteImport.update({
+    id: '/documents',
+    path: '/documents',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminDriversRoute =
+  AuthenticatedAdminDriversRouteImport.update({
+    id: '/drivers',
+    path: '/drivers',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminEnquiriesRoute =
+  AuthenticatedAdminEnquiriesRouteImport.update({
+    id: '/enquiries',
+    path: '/enquiries',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminInvoicesRoute =
+  AuthenticatedAdminInvoicesRouteImport.update({
+    id: '/invoices',
+    path: '/invoices',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminReturnTripsRoute =
+  AuthenticatedAdminReturnTripsRouteImport.update({
+    id: '/return-trips',
+    path: '/return-trips',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminRidesRoute = AuthenticatedAdminRidesRouteImport.update({
+  id: '/rides',
+  path: '/rides',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminWalletsRoute =
+  AuthenticatedAdminWalletsRouteImport.update({
+    id: '/wallets',
+    path: '/wallets',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedDriverIndexRoute =
   AuthenticatedDriverIndexRouteImport.update({
@@ -156,13 +216,22 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
   '/vehicles': typeof VehiclesRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/driver': typeof AuthenticatedDriverRouteRouteWithChildren
+  '/admin/documents': typeof AuthenticatedAdminDocumentsRoute
+  '/admin/drivers': typeof AuthenticatedAdminDriversRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
+  '/admin/invoices': typeof AuthenticatedAdminInvoicesRoute
+  '/admin/return-trips': typeof AuthenticatedAdminReturnTripsRoute
+  '/admin/rides': typeof AuthenticatedAdminRidesRoute
+  '/admin/wallets': typeof AuthenticatedAdminWalletsRoute
   '/driver/documents': typeof AuthenticatedDriverDocumentsRoute
   '/driver/pod': typeof AuthenticatedDriverPodRoute
   '/driver/requests': typeof AuthenticatedDriverRequestsRoute
   '/driver/return-trips': typeof AuthenticatedDriverReturnTripsRoute
   '/driver/trips': typeof AuthenticatedDriverTripsRoute
   '/driver/wallet': typeof AuthenticatedDriverWalletRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/driver/': typeof AuthenticatedDriverIndexRoute
 }
 export interface FileRoutesByTo {
@@ -178,12 +247,20 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
   '/vehicles': typeof VehiclesRoute
+  '/admin/documents': typeof AuthenticatedAdminDocumentsRoute
+  '/admin/drivers': typeof AuthenticatedAdminDriversRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
+  '/admin/invoices': typeof AuthenticatedAdminInvoicesRoute
+  '/admin/return-trips': typeof AuthenticatedAdminReturnTripsRoute
+  '/admin/rides': typeof AuthenticatedAdminRidesRoute
+  '/admin/wallets': typeof AuthenticatedAdminWalletsRoute
   '/driver/documents': typeof AuthenticatedDriverDocumentsRoute
   '/driver/pod': typeof AuthenticatedDriverPodRoute
   '/driver/requests': typeof AuthenticatedDriverRequestsRoute
   '/driver/return-trips': typeof AuthenticatedDriverReturnTripsRoute
   '/driver/trips': typeof AuthenticatedDriverTripsRoute
   '/driver/wallet': typeof AuthenticatedDriverWalletRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/driver': typeof AuthenticatedDriverIndexRoute
 }
 export interface FileRoutesById {
@@ -201,13 +278,22 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
   '/vehicles': typeof VehiclesRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/driver': typeof AuthenticatedDriverRouteRouteWithChildren
+  '/_authenticated/admin/documents': typeof AuthenticatedAdminDocumentsRoute
+  '/_authenticated/admin/drivers': typeof AuthenticatedAdminDriversRoute
+  '/_authenticated/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
+  '/_authenticated/admin/invoices': typeof AuthenticatedAdminInvoicesRoute
+  '/_authenticated/admin/return-trips': typeof AuthenticatedAdminReturnTripsRoute
+  '/_authenticated/admin/rides': typeof AuthenticatedAdminRidesRoute
+  '/_authenticated/admin/wallets': typeof AuthenticatedAdminWalletsRoute
   '/_authenticated/driver/documents': typeof AuthenticatedDriverDocumentsRoute
   '/_authenticated/driver/pod': typeof AuthenticatedDriverPodRoute
   '/_authenticated/driver/requests': typeof AuthenticatedDriverRequestsRoute
   '/_authenticated/driver/return-trips': typeof AuthenticatedDriverReturnTripsRoute
   '/_authenticated/driver/trips': typeof AuthenticatedDriverTripsRoute
   '/_authenticated/driver/wallet': typeof AuthenticatedDriverWalletRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/driver/': typeof AuthenticatedDriverIndexRoute
 }
 export interface FileRouteTypes {
@@ -225,13 +311,22 @@ export interface FileRouteTypes {
     | '/terms'
     | '/track'
     | '/vehicles'
+    | '/admin'
     | '/driver'
+    | '/admin/documents'
+    | '/admin/drivers'
+    | '/admin/enquiries'
+    | '/admin/invoices'
+    | '/admin/return-trips'
+    | '/admin/rides'
+    | '/admin/wallets'
     | '/driver/documents'
     | '/driver/pod'
     | '/driver/requests'
     | '/driver/return-trips'
     | '/driver/trips'
     | '/driver/wallet'
+    | '/admin/'
     | '/driver/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -247,12 +342,20 @@ export interface FileRouteTypes {
     | '/terms'
     | '/track'
     | '/vehicles'
+    | '/admin/documents'
+    | '/admin/drivers'
+    | '/admin/enquiries'
+    | '/admin/invoices'
+    | '/admin/return-trips'
+    | '/admin/rides'
+    | '/admin/wallets'
     | '/driver/documents'
     | '/driver/pod'
     | '/driver/requests'
     | '/driver/return-trips'
     | '/driver/trips'
     | '/driver/wallet'
+    | '/admin'
     | '/driver'
   id:
     | '__root__'
@@ -269,13 +372,22 @@ export interface FileRouteTypes {
     | '/terms'
     | '/track'
     | '/vehicles'
+    | '/_authenticated/admin'
     | '/_authenticated/driver'
+    | '/_authenticated/admin/documents'
+    | '/_authenticated/admin/drivers'
+    | '/_authenticated/admin/enquiries'
+    | '/_authenticated/admin/invoices'
+    | '/_authenticated/admin/return-trips'
+    | '/_authenticated/admin/rides'
+    | '/_authenticated/admin/wallets'
     | '/_authenticated/driver/documents'
     | '/_authenticated/driver/pod'
     | '/_authenticated/driver/requests'
     | '/_authenticated/driver/return-trips'
     | '/_authenticated/driver/trips'
     | '/_authenticated/driver/wallet'
+    | '/_authenticated/admin/'
     | '/_authenticated/driver/'
   fileRoutesById: FileRoutesById
 }
@@ -388,12 +500,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VehiclesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/driver': {
       id: '/_authenticated/driver'
       path: '/driver'
       fullPath: '/driver'
       preLoaderRoute: typeof AuthenticatedDriverRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/documents': {
+      id: '/_authenticated/admin/documents'
+      path: '/documents'
+      fullPath: '/admin/documents'
+      preLoaderRoute: typeof AuthenticatedAdminDocumentsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/drivers': {
+      id: '/_authenticated/admin/drivers'
+      path: '/drivers'
+      fullPath: '/admin/drivers'
+      preLoaderRoute: typeof AuthenticatedAdminDriversRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/enquiries': {
+      id: '/_authenticated/admin/enquiries'
+      path: '/enquiries'
+      fullPath: '/admin/enquiries'
+      preLoaderRoute: typeof AuthenticatedAdminEnquiriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/invoices': {
+      id: '/_authenticated/admin/invoices'
+      path: '/invoices'
+      fullPath: '/admin/invoices'
+      preLoaderRoute: typeof AuthenticatedAdminInvoicesRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/return-trips': {
+      id: '/_authenticated/admin/return-trips'
+      path: '/return-trips'
+      fullPath: '/admin/return-trips'
+      preLoaderRoute: typeof AuthenticatedAdminReturnTripsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/rides': {
+      id: '/_authenticated/admin/rides'
+      path: '/rides'
+      fullPath: '/admin/rides'
+      preLoaderRoute: typeof AuthenticatedAdminRidesRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/wallets': {
+      id: '/_authenticated/admin/wallets'
+      path: '/wallets'
+      fullPath: '/admin/wallets'
+      preLoaderRoute: typeof AuthenticatedAdminWalletsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/driver/': {
       id: '/_authenticated/driver/'
@@ -447,6 +622,34 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminDocumentsRoute: typeof AuthenticatedAdminDocumentsRoute
+  AuthenticatedAdminDriversRoute: typeof AuthenticatedAdminDriversRoute
+  AuthenticatedAdminEnquiriesRoute: typeof AuthenticatedAdminEnquiriesRoute
+  AuthenticatedAdminInvoicesRoute: typeof AuthenticatedAdminInvoicesRoute
+  AuthenticatedAdminReturnTripsRoute: typeof AuthenticatedAdminReturnTripsRoute
+  AuthenticatedAdminRidesRoute: typeof AuthenticatedAdminRidesRoute
+  AuthenticatedAdminWalletsRoute: typeof AuthenticatedAdminWalletsRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+  {
+    AuthenticatedAdminDocumentsRoute: AuthenticatedAdminDocumentsRoute,
+    AuthenticatedAdminDriversRoute: AuthenticatedAdminDriversRoute,
+    AuthenticatedAdminEnquiriesRoute: AuthenticatedAdminEnquiriesRoute,
+    AuthenticatedAdminInvoicesRoute: AuthenticatedAdminInvoicesRoute,
+    AuthenticatedAdminReturnTripsRoute: AuthenticatedAdminReturnTripsRoute,
+    AuthenticatedAdminRidesRoute: AuthenticatedAdminRidesRoute,
+    AuthenticatedAdminWalletsRoute: AuthenticatedAdminWalletsRoute,
+    AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  }
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
+
 interface AuthenticatedDriverRouteRouteChildren {
   AuthenticatedDriverDocumentsRoute: typeof AuthenticatedDriverDocumentsRoute
   AuthenticatedDriverPodRoute: typeof AuthenticatedDriverPodRoute
@@ -474,10 +677,12 @@ const AuthenticatedDriverRouteRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedDriverRouteRoute: typeof AuthenticatedDriverRouteRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedDriverRouteRoute: AuthenticatedDriverRouteRouteWithChildren,
 }
 
