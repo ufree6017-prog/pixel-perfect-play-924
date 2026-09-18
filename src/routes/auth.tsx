@@ -16,9 +16,8 @@ import { homePathForRole } from "@/hooks/useSessionRole";
 type Mode = "customer" | "driver";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: Record<string, unknown>): { mode?: Mode } => ({
-    mode: search["mode"] === "driver" ? "driver" : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { mode?: Mode } =>
+    search["mode"] === "driver" ? { mode: "driver" } : {},
   head: () => ({
     meta: [
       { title: `Sign in or create an account — ${brand.name}` },
