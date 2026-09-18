@@ -148,7 +148,7 @@ function BusinessPage() {
                     </div>
                     <div className="space-y-2">
                       <Label>Vehicle needed</Label>
-                      <Select defaultValue={businessVehicles[0]?.id}>
+                      <Select defaultValue={businessVehicles[0]?.id ?? ""}>
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
