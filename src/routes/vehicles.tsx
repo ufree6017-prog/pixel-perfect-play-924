@@ -121,7 +121,7 @@ function VehiclesPage() {
             <VehicleGrid rows={retail} />
             <RateTable rows={retail} />
             <Button asChild size="lg" className="mt-6">
-              <Link to="/book">Book a city load</Link>
+              <Link to="/book" search={{}}>Book a city load</Link>
             </Button>
           </TabsContent>
           <TabsContent value="business">
