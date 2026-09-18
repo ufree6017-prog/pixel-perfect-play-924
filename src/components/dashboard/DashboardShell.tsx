@@ -66,7 +66,12 @@ export function DashboardShell({
             <Button asChild variant="secondary" size="sm">
               <Link to="/">Back to website</Link>
             </Button>
-            <Button variant="outline" size="sm" onClick={handleSignOut}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSignOut}
+              className="border-sidebar-border bg-transparent text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+            >
               <LogOut className="mr-2 size-4" /> Sign out
             </Button>
           </div>
