@@ -279,7 +279,7 @@ function TrackPage() {
                   <Truck className="size-5" /> Need another truck today?
                 </p>
                 <Button asChild variant="secondary">
-                  <Link to="/book">Book a truck</Link>
+                  <Link to="/book" search={{}}>Book a truck</Link>
                 </Button>
               </CardContent>
             </Card>

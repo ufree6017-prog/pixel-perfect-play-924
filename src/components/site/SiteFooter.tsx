@@ -24,7 +24,7 @@ export function SiteFooter() {
           <h4 className="text-sm font-semibold uppercase tracking-wide text-accent">Services</h4>
           <ul className="mt-4 space-y-2 text-sm text-navy-foreground/75">
             <li>
-              <Link to="/book">Book a truck</Link>
+              <Link to="/book" search={{}}>Book a truck</Link>
             </li>
             <li>
               <Link to="/vehicles">Vehicles &amp; pricing</Link>

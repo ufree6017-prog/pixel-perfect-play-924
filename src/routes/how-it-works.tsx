@@ -117,7 +117,7 @@ function HowItWorks() {
             </div>
           </div>
           <Button asChild size="lg" className="mt-8">
-            <Link to="/book">Get a fare estimate</Link>
+            <Link to="/book" search={{}}>Get a fare estimate</Link>
           </Button>
         </div>
       </section>

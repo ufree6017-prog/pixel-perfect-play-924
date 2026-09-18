@@ -120,7 +120,7 @@ function Home() {
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <Button asChild size="lg" className="flex-1">
-                    <Link to="/book">
+                    <Link to="/book" search={{}}>
                       Get fare estimate <ArrowRight className="ml-2 size-4" />
                     </Link>
                   </Button>

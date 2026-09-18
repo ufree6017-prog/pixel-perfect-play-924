@@ -19,10 +19,14 @@ import { vehiclesForFlow } from "@/lib/mock/vehicles";
 import type { BookingFlow, PaymentMethod } from "@/lib/mock/types";
 
 export const Route = createFileRoute("/book")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    pickup: typeof search["pickup"] === "string" ? search["pickup"] : undefined,
-    drop: typeof search["drop"] === "string" ? search["drop"] : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { pickup?: string; drop?: string } => {
+    const pickup = typeof search["pickup"] === "string" ? search["pickup"] : "";
+    const drop = typeof search["drop"] === "string" ? search["drop"] : "";
+    return {
+      ...(pickup ? { pickup } : {}),
+      ...(drop ? { drop } : {}),
+    };
+  },
   head: () => ({
     meta: [
       { title: `Book a truck — ${brand.name}` },
