@@ -306,6 +306,7 @@ function TrackPage() {
           </div>
         </div>
       </section>
+      )}
     </SiteLayout>
   );
 }
