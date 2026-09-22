@@ -207,10 +207,11 @@ function TrackPage() {
 
                 <div className="mt-6 rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
                   <p className="flex items-center gap-2 font-medium text-foreground">
-                    <MapPin className="size-4" /> Live map arrives in a later build pass
+                    <MapPin className="size-4" /> Map view coming soon
                   </p>
                   <p className="mt-1">
-                    This build shows status and ETA only — no GPS or routing integration yet.
+                    You get live status updates and ETA here today; on-map tracking lands in the next
+                    release.
                   </p>
                 </div>
               </CardContent>
