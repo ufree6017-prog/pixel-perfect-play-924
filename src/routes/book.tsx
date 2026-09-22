@@ -244,6 +244,15 @@ function BookPage() {
             <p className="text-xs text-muted-foreground">
               Tolls & state taxes extra. Waiting charges apply after the free loading window.
             </p>
+            {flow === "business" ? (
+              <p className="text-xs text-muted-foreground">
+                Indicative bulk rates. For a firm quote with credit terms,{" "}
+                <Link to="/business" className="underline">
+                  raise a business enquiry
+                </Link>
+                .
+              </p>
+            ) : null}
             <Button size="lg" disabled={!vehicle} onClick={() => setStep(3)}>
               Continue <ArrowRight className="ml-2 size-4" />
             </Button>
