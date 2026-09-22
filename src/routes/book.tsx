@@ -135,6 +135,18 @@ function BookPage() {
                   <TabsTrigger value="business">Business / bulk</TabsTrigger>
                 </TabsList>
               </Tabs>
+              {flow === "business" ? (
+                <div className="mt-4 rounded-lg border border-accent/40 bg-accent/10 p-4 text-sm">
+                  <p className="font-semibold">Bulk loads are quoted, not instantly booked</p>
+                  <p className="mt-1 text-muted-foreground">
+                    You can see an indicative estimate for containers, flatbeds and trailers here.
+                    Final rates, credit terms and GST invoicing are confirmed by our freight desk.
+                  </p>
+                  <Button asChild variant="outline" size="sm" className="mt-3">
+                    <Link to="/business">Request a bulk quote</Link>
+                  </Button>
+                </div>
+              ) : null}
               <form className="mt-6 space-y-4" onSubmit={goToVehicles}>
                 <div className="space-y-2">
                   <Label htmlFor="pickup">Pickup address</Label>
@@ -232,6 +244,15 @@ function BookPage() {
             <p className="text-xs text-muted-foreground">
               Tolls & state taxes extra. Waiting charges apply after the free loading window.
             </p>
+            {flow === "business" ? (
+              <p className="text-xs text-muted-foreground">
+                Indicative bulk rates. For a firm quote with credit terms,{" "}
+                <Link to="/business" className="underline">
+                  raise a business enquiry
+                </Link>
+                .
+              </p>
+            ) : null}
             <Button size="lg" disabled={!vehicle} onClick={() => setStep(3)}>
               Continue <ArrowRight className="ml-2 size-4" />
             </Button>

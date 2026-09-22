@@ -39,9 +39,29 @@ export const Route = createFileRoute("/track")({
 const activeBookings = mockBookings.filter((booking) => booking.status !== "cancelled");
 
 function TrackPage() {
-  const [selectedId, setSelectedId] = useState(activeBookings[0]!.id);
-  const booking = activeBookings.find((item) => item.id === selectedId)!;
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [lookup, setLookup] = useState("");
+  const booking = activeBookings.find((item) => item.id === selectedId) ?? activeBookings[0]!;
   const driver = mockDrivers.find((item) => item.id === booking.driverId) ?? mockDrivers[0]!;
+
+  function handleLookup(event: React.FormEvent) {
+    event.preventDefault();
+    const term = lookup.trim().toLowerCase();
+    if (!term) {
+      toast.error("Enter your booking ID or the phone number used to book.");
+      return;
+    }
+    const match = activeBookings.find(
+      (item) =>
+        item.reference.toLowerCase().includes(term) ||
+        item.reference.toLowerCase().replace(/[^a-z0-9]/g, "").includes(term.replace(/\D/g, "")),
+    );
+    if (!match) {
+      toast.error("No booking found for that ID or number.");
+      return;
+    }
+    setSelectedId(match.id);
+  }
 
   const [status, setStatus] = useState<BookingStatus>(booking.status);
   const [otp, setOtp] = useState("");
@@ -95,8 +115,57 @@ function TrackPage() {
         </div>
       </section>
 
+      {selectedId === null ? (
+      <section className="mx-auto max-w-2xl px-4 py-12 sm:px-6 md:py-16">
+        <Card className="card-elevated">
+          <CardHeader>
+            <CardTitle>Find your booking</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-3" onSubmit={handleLookup}>
+              <Label htmlFor="booking-lookup">Booking ID or phone number</Label>
+              <Input
+                id="booking-lookup"
+                value={lookup}
+                onChange={(event) => setLookup(event.target.value)}
+                placeholder="TS-24881 or 90000 00000"
+              />
+              <Button type="submit" className="w-full">
+                Track my load
+              </Button>
+            </form>
+            <p className="mt-4 text-xs text-muted-foreground">
+              No booking yet? <Link to="/book" search={{}} className="underline">Book a truck</Link>{" "}
+              or call {brand.supportPhone} if you cannot find your booking ID.
+            </p>
+            <Separator className="my-5" />
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Sample bookings (demo build)
+            </p>
+            <div className="mt-2 space-y-2">
+              {activeBookings.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setSelectedId(item.id)}
+                  className="w-full rounded-lg border border-border p-3 text-left transition-colors hover:bg-secondary"
+                >
+                  <p className="text-sm font-semibold">{item.reference}</p>
+                  <p className="text-xs text-muted-foreground">{item.route}</p>
+                </button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+      ) : (
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 md:py-14">
         <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+          <div className="lg:col-span-2">
+            <Button variant="outline" size="sm" onClick={() => setSelectedId(null)}>
+              Track a different booking
+            </Button>
+          </div>
           <div className="space-y-2">
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Your bookings
@@ -187,10 +256,11 @@ function TrackPage() {
 
                 <div className="mt-6 rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
                   <p className="flex items-center gap-2 font-medium text-foreground">
-                    <MapPin className="size-4" /> Live map arrives in a later build pass
+                    <MapPin className="size-4" /> Map view coming soon
                   </p>
                   <p className="mt-1">
-                    This build shows status and ETA only — no GPS or routing integration yet.
+                    You get live status updates and ETA here today; on-map tracking lands in the next
+                    release.
                   </p>
                 </div>
               </CardContent>
@@ -286,6 +356,7 @@ function TrackPage() {
           </div>
         </div>
       </section>
+      )}
     </SiteLayout>
   );
 }

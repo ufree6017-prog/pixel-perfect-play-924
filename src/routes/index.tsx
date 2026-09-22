@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -16,7 +17,7 @@ import { PageIntro, SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { brand } from "@/lib/brand";
+import { brand, pricingPlaceholders } from "@/lib/brand";
 import { mockVehicleCategories } from "@/lib/mock/vehicles";
 import { formatINR } from "@/lib/fare";
 
@@ -65,76 +66,153 @@ const trustPoints = [
 
 function Home() {
   const intracity = mockVehicleCategories.filter((v) => v.segment === "intracity").slice(0, 4);
+  const [audience, setAudience] = useState<"customer" | "driver">("customer");
 
   return (
     <SiteLayout>
       <section className="surface-hero">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 md:py-16 lg:grid-cols-2">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full bg-accent/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
+            <div
+              role="tablist"
+              aria-label="Choose what you want to do"
+              className="inline-flex rounded-full bg-card/15 p-1 text-sm font-semibold"
+            >
+              {(
+                [
+                  { id: "customer", label: "I need a truck" },
+                  { id: "driver", label: "I drive a truck" },
+                ] as const
+              ).map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={audience === option.id}
+                  onClick={() => setAudience(option.id)}
+                  className={`min-h-11 rounded-full px-4 transition-colors ${
+                    audience === option.id
+                      ? "bg-accent text-accent-foreground"
+                      : "text-navy-foreground/85 hover:bg-card/10"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
               <Truck className="size-3.5" /> Intracity &amp; intercity · Pan-India
             </p>
-            <h1 className="mt-5 text-3xl font-bold leading-tight md:text-5xl">
-              Book a truck in minutes. Shift a home or move a full load.
-            </h1>
-            <p className="mt-4 max-w-xl text-sm opacity-85 md:text-base">
-              Mini trucks and tempos for city shifting and raw material, containers and trailers for
-              long-haul freight. Fixed estimate before you book, live tracking after.
-            </p>
 
-            <Card className="mt-8 border-0 shadow-lift">
-              <CardContent className="p-4">
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div>
-                    <label
-                      className="text-xs font-semibold text-muted-foreground"
-                      htmlFor="home-pickup"
-                    >
-                      Pickup
-                    </label>
-                    <div className="mt-1 flex items-center gap-2 rounded-md border border-input px-3">
-                      <MapPin className="size-4 text-primary" />
-                      <Input
-                        id="home-pickup"
-                        placeholder="Area, city"
-                        className="border-0 px-0 shadow-none focus-visible:ring-0"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label
-                      className="text-xs font-semibold text-muted-foreground"
-                      htmlFor="home-drop"
-                    >
-                      Drop
-                    </label>
-                    <div className="mt-1 flex items-center gap-2 rounded-md border border-input px-3">
-                      <MapPin className="size-4 text-accent" />
-                      <Input
-                        id="home-drop"
-                        placeholder="Area, city"
-                        className="border-0 px-0 shadow-none focus-visible:ring-0"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Button asChild size="lg" className="flex-1">
-                    <Link to="/book" search={{}}>
-                      Get fare estimate <ArrowRight className="ml-2 size-4" />
-                    </Link>
-                  </Button>
-                  <Button asChild size="lg" variant="outline">
-                    <Link to="/business">
-                      <Building2 className="mr-2 size-4" /> Bulk / business load
-                    </Link>
-                  </Button>
-                </div>
-                <p className="mt-3 text-xs text-muted-foreground">
-                  Estimates exclude tolls and state taxes. Free cancellation within 5 minutes.
+            {audience === "customer" ? (
+              <>
+                <h1 className="mt-5 text-3xl font-bold leading-tight md:text-5xl">
+                  Book a truck in minutes. Shift a home or move a full load.
+                </h1>
+                <p className="mt-4 max-w-xl text-sm opacity-85 md:text-base">
+                  Mini trucks and tempos for city shifting and raw material, containers and trailers
+                  for long-haul freight. Fixed estimate before you book, live tracking after.
                 </p>
-              </CardContent>
-            </Card>
+
+                <Card className="mt-8 border-0 shadow-lift">
+                  <CardContent className="p-4">
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div>
+                        <label
+                          className="text-xs font-semibold text-muted-foreground"
+                          htmlFor="home-pickup"
+                        >
+                          Pickup
+                        </label>
+                        <div className="mt-1 flex items-center gap-2 rounded-md border border-input px-3">
+                          <MapPin className="size-4 text-primary" />
+                          <Input
+                            id="home-pickup"
+                            placeholder="Area, city"
+                            className="border-0 px-0 shadow-none focus-visible:ring-0"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label
+                          className="text-xs font-semibold text-muted-foreground"
+                          htmlFor="home-drop"
+                        >
+                          Drop
+                        </label>
+                        <div className="mt-1 flex items-center gap-2 rounded-md border border-input px-3">
+                          <MapPin className="size-4 text-accent" />
+                          <Input
+                            id="home-drop"
+                            placeholder="Area, city"
+                            className="border-0 px-0 shadow-none focus-visible:ring-0"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <Button asChild size="lg" className="flex-1">
+                        <Link to="/book" search={{}}>
+                          Get fare estimate <ArrowRight className="ml-2 size-4" />
+                        </Link>
+                      </Button>
+                      <Button asChild size="lg" variant="outline">
+                        <Link to="/business">
+                          <Building2 className="mr-2 size-4" /> Bulk / business load
+                        </Link>
+                      </Button>
+                    </div>
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      Estimates exclude tolls and state taxes. Free cancellation within 5 minutes.
+                    </p>
+                  </CardContent>
+                </Card>
+              </>
+            ) : (
+              <>
+                <h1 className="mt-5 text-3xl font-bold leading-tight md:text-5xl">
+                  Own a truck? Get paid loads near you, every day.
+                </h1>
+                <p className="mt-4 max-w-xl text-sm opacity-85 md:text-base">
+                  City loads, intercity trips and discounted return loads on your way home. Wallet,
+                  commission and payouts all visible in your driver portal.
+                </p>
+
+                <Card className="mt-8 border-0 shadow-lift">
+                  <CardContent className="p-5">
+                    <ul className="space-y-3 text-sm">
+                      <li className="flex items-start gap-2">
+                        <BadgeCheck className="mt-0.5 size-4 shrink-0 text-primary" />
+                        Upload licence, RC and insurance once — our team verifies and activates you.
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <IndianRupee className="mt-0.5 size-4 shrink-0 text-primary" />
+                        Daily earnings summary with a clear {pricingPlaceholders.commissionPercent}%
+                        platform commission.
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
+                        Return-trip board so you rarely drive back empty.
+                      </li>
+                    </ul>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      <Button asChild size="lg" className="flex-1">
+                        <Link to="/auth" search={{ mode: "driver" }}>
+                          Register as a driver <ArrowRight className="ml-2 size-4" />
+                        </Link>
+                      </Button>
+                      <Button asChild size="lg" variant="outline">
+                        <Link to="/auth">Driver sign in</Link>
+                      </Button>
+                    </div>
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      Verification is reviewed by our team before you can accept loads.
+                    </p>
+                  </CardContent>
+                </Card>
+              </>
+            )}
           </div>
 
           <div className="relative">
