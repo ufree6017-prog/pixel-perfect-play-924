@@ -39,9 +39,29 @@ export const Route = createFileRoute("/track")({
 const activeBookings = mockBookings.filter((booking) => booking.status !== "cancelled");
 
 function TrackPage() {
-  const [selectedId, setSelectedId] = useState(activeBookings[0]!.id);
-  const booking = activeBookings.find((item) => item.id === selectedId)!;
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [lookup, setLookup] = useState("");
+  const booking = activeBookings.find((item) => item.id === selectedId) ?? activeBookings[0]!;
   const driver = mockDrivers.find((item) => item.id === booking.driverId) ?? mockDrivers[0]!;
+
+  function handleLookup(event: React.FormEvent) {
+    event.preventDefault();
+    const term = lookup.trim().toLowerCase();
+    if (!term) {
+      toast.error("Enter your booking ID or the phone number used to book.");
+      return;
+    }
+    const match = activeBookings.find(
+      (item) =>
+        item.reference.toLowerCase().includes(term) ||
+        item.reference.toLowerCase().replace(/[^a-z0-9]/g, "").includes(term.replace(/\D/g, "")),
+    );
+    if (!match) {
+      toast.error("No booking found for that ID or number.");
+      return;
+    }
+    setSelectedId(match.id);
+  }
 
   const [status, setStatus] = useState<BookingStatus>(booking.status);
   const [otp, setOtp] = useState("");
