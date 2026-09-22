@@ -6,7 +6,7 @@ import { SupportWidget } from "./SupportWidget";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-dvh flex-col">
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
