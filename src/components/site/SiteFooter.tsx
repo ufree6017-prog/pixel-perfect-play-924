@@ -55,6 +55,12 @@ export function SiteFooter() {
             <li>
               <Link to="/contact">Contact &amp; support</Link>
             </li>
+            <li>
+              <Link to="/driver">Driver portal</Link>
+            </li>
+            <li>
+              <Link to="/admin">Admin dashboard</Link>
+            </li>
           </ul>
         </div>
 
