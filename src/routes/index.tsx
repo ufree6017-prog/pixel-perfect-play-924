@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -16,7 +17,7 @@ import { PageIntro, SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { brand } from "@/lib/brand";
+import { brand, pricingPlaceholders } from "@/lib/brand";
 import { mockVehicleCategories } from "@/lib/mock/vehicles";
 import { formatINR } from "@/lib/fare";
 
